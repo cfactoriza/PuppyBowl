@@ -39,10 +39,6 @@ export const renderAllPlayers = (playerList) => {
     const button = detailButtons[i];
     button.addEventListener('click', async (event) => {
       fetchSinglePlayer(event.target.attributes[1].value)
-      
-      /*
-        YOUR CODE HERE
-      */
     });
   }
 };
@@ -69,6 +65,11 @@ export const renderSinglePlayer = (playerObj) => {
   `;
 
   playerContainer.innerHTML = pupHTML;
+  let goBackButton = document.getElementById('see-all');
+  goBackButton.addEventListener('click', async () => {
+    const response = await fetchAllPlayers();
+    renderAllPlayers(response);
+  });
 };
 
 export const renderNewPlayerForm = () => {
