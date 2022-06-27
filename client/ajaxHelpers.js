@@ -1,3 +1,5 @@
+import { renderSinglePlayer } from "./renderHelpers";
+
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2206-FTB-ET-WEB-FT';
 // Use the APIURL variable for fetch requests
@@ -16,6 +18,9 @@ export const fetchAllPlayers = async () => {
 };
 
 export const fetchSinglePlayer = async (playerId) => {
+    const response = await fetch(APIURL + "players/" + playerId);
+    const result = await response.json();
+    renderSinglePlayer(result.data.player);
 
 };
 
