@@ -1,4 +1,4 @@
-import { fetchAllPlayers, fetchSinglePlayer, addNewPlayer } from './ajaxHelpers';
+import { fetchAllPlayers, fetchSinglePlayer, addNewPlayer, removePlayer } from './ajaxHelpers';
 
 
 const playerContainer = document.getElementById('all-players-container');
@@ -23,6 +23,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
+        <button class="delete-button" data-id=${pup.id}>Delete Player</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -34,6 +35,16 @@ export const renderAllPlayers = (playerList) => {
   // Now that the HTML for all players has been added to the DOM,
   // we want to grab those "See details" buttons on each player
   // and attach a click handler to each one
+  let deleteButton = [...document.getElementsByClassName('delete-button')];
+  for (let i = 0; i < deleteButton.length; i++) {
+    const button = deleteButton[i];
+    button.addEventListener('click', async (event) => {
+      await removePlayer(event.target.attributes[1].value);
+      const players = await fetchAllPlayers();
+      renderAllPlayers(players);
+    });
+  }
+
   let detailButtons = [...document.getElementsByClassName('detail-button')];
   for (let i = 0; i < detailButtons.length; i++) {
     const button = detailButtons[i];
@@ -93,7 +104,7 @@ export const renderNewPlayerForm = () => {
       name: newName,
       breed: newBreed,
     } 
-    addNewPlayer(newAnimal);
+    await addNewPlayer(newAnimal);
     const response = await fetchAllPlayers();
     renderAllPlayers(response);
     event.target.name.value = "";

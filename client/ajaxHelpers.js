@@ -47,5 +47,19 @@ export const addNewPlayer = async (playerObj) => {
 };
 
 export const removePlayer = async (playerId) => {
-
+    fetch(APIURL + "/players", {
+    method: 'DELETE',
+  });
+  try {
+    const response = await fetch(
+        APIURL + "/players/" + playerId,
+      {
+        method: 'DELETE',
+      }
+    );
+    const result = await response.json();
+    console.log(result);
+  } catch (err) {
+    console.error(err);
+  }
 };
