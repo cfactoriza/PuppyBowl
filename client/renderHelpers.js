@@ -90,19 +90,32 @@ export const renderNewPlayerForm = () => {
       <input type="text" name="name" />
       <label for="breed">Breed:</label>
       <input type="text" name="breed" />
+      <label for="teams">Choose a team:</label>
+
+      <select name="teams" id="team">
+        <option value="Ruff">Ruff</option>
+        <option value="Bork">Bork</option>
+      </select>
       <button type="submit">Submit</button>
     </form>
   `;
   newPlayerFormContainer.innerHTML = formHTML;
+
+  
 
   let form = document.querySelector('#new-player-form > form');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     let newName = event.target.name.value;
     let newBreed = event.target.breed.value;
+    let idNum = 277;
+    if (event.target.teams.selectedIndex === 1){
+      idNum = 111;
+    }
     let newAnimal = {
       name: newName,
       breed: newBreed,
+      teamId: idNum
     } 
     await addNewPlayer(newAnimal);
     const response = await fetchAllPlayers();

@@ -21,7 +21,6 @@ export const fetchSinglePlayer = async (playerId) => {
     const response = await fetch(APIURL + "players/" + playerId);
     const result = await response.json();
     renderSinglePlayer(result.data.player);
-
 };
 
 export const addNewPlayer = async (playerObj) => {
@@ -36,6 +35,7 @@ export const addNewPlayer = async (playerObj) => {
             body: JSON.stringify({
               name: playerObj.name,
               breed: playerObj.breed,
+              teamId: playerObj.teamId
             }),
           }
         );
