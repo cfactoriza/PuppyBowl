@@ -25,7 +25,25 @@ export const fetchSinglePlayer = async (playerId) => {
 };
 
 export const addNewPlayer = async (playerObj) => {
-
+    try {
+        const response = await fetch(
+            APIURL + "/players",
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: playerObj.name,
+              breed: playerObj.breed,
+            }),
+          }
+        );
+        const result = await response.json();
+        console.log(result);
+      } catch (err) {
+        console.error(err);
+      }
 };
 
 export const removePlayer = async (playerId) => {

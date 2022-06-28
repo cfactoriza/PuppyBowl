@@ -1,4 +1,4 @@
-import { fetchAllPlayers, fetchSinglePlayer } from './ajaxHelpers';
+import { fetchAllPlayers, fetchSinglePlayer, addNewPlayer } from './ajaxHelpers';
 
 
 const playerContainer = document.getElementById('all-players-container');
@@ -86,8 +86,17 @@ export const renderNewPlayerForm = () => {
 
   let form = document.querySelector('#new-player-form > form');
   form.addEventListener('submit', async (event) => {
-    /*
-      YOUR CODE HERE
-    */
+    event.preventDefault();
+    let newName = event.target.name.value;
+    let newBreed = event.target.breed.value;
+    let newAnimal = {
+      name: newName,
+      breed: newBreed,
+    } 
+    addNewPlayer(newAnimal);
+    const response = await fetchAllPlayers();
+    renderAllPlayers(response);
+    event.target.name.value = "";
+    event.target.breed.value = "";
   });
 };
